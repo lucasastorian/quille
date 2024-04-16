@@ -8,6 +8,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Heading from '@tiptap/extension-heading';
 import { mergeAttributes } from '@tiptap/core'
 import { Highlight } from '@tiptap/extension-highlight';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'document',
@@ -15,7 +16,8 @@ import { Highlight } from '@tiptap/extension-highlight';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgxTiptapModule
+    NgxTiptapModule,
+    ClipboardModule
   ],
   templateUrl: './document.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -75,9 +77,14 @@ export class DocumentComponent {
     },
     editorProps: {
       attributes: {
-        class: 'prose focus:outline-none max-w-none text-[18px] leading-normal bg-white min-h-screen [&_ol]:list-decimal [&_ul]:list-disc',
+        class: 'prose focus:outline-none max-w-none text-[18px] leading-normal bg-white min-h-screen [&_ol]:list-decimal [&_ul]:list-disc px-4',
       },
     },
   });
+
+  public copyToClipboard(): void {
+    const content = this.editor.getHTML();
+    navigator.clipboard.writeText(content);
+  }
 
 }

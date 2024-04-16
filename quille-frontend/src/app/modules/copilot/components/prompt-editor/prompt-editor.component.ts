@@ -20,6 +20,9 @@ export class PromptEditorComponent implements OnChanges {
   @Input() disabled: boolean = false;
   @Input() placeholder: string = 'Type something...'
   @Input() completionInProgress: boolean = false;
+  @Input() model: 'claude-3-haiku-20240307' | 'claude-3-sonnet-20240229' | 'claude-3-opus-20240229' = 'claude-3-sonnet-20240229';
+  
+  @Output() modelChange: EventEmitter<'claude-3-haiku-20240307' | 'claude-3-sonnet-20240229' | 'claude-3-opus-20240229'> = new EventEmitter();
   @Output() onSubmit: EventEmitter<string> = new EventEmitter();
 
   promptControl = new FormControl('', [Validators.required]);

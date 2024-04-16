@@ -99,14 +99,14 @@ export class MessageService {
 
   constructor(private sseClient: SseClient) { }
 
-  public stream(messages: Array<Message>, document: Document) {
+  public stream(messages: Array<Message>, document: Document, model: 'claude-3-haiku-20240307' | 'claude-3-sonnet-20240229' | 'claude-3-opus-20240229') {
     const url = `http://localhost:8080/stream`;
 
-    const body = { messages, document };
+    const body = { messages, document, model };
     const streamComplete: Subject<void> = new Subject<void>();
     const stream$: Subject<SSEMessage> = new Subject<SSEMessage>();
 
-    this.sseClient.stream(url, { keepAlive: false, reconnectionDelay: 5_000 }, { body }, 'POST').pipe(
+    this.sseClient.stream(url, { keepAlive: false, reconnectionDelay: 5_000, responseType: 'event' }, { body }, 'POST').pipe(
       takeUntil(streamComplete)
     ).subscribe((event: any) => {
       console.log(event);
@@ -131,7 +131,7 @@ export class MessageService {
         } else if (payload.name === SSEEvent.Complete) {
           sseMessage.complete = true;
           console.log("Calling Stream Complete");
-          streamComplete.next();
+          streamComplete.complete();
 
         } else {
           streamComplete.next();

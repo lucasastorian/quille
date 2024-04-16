@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Message, MessageService, SSEMessage } from '../../../services/message/message.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { PromptEditorComponent } from '../components/prompt-editor/prompt-editor.component';
 import { PromptSuggestionsComponent } from '../components/prompt-suggestions/prompt-suggestions.component';
 import { DocumentComponent } from '../../document/document/document.component';
@@ -27,6 +27,7 @@ export type Document = {
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
 
     PromptSuggestionsComponent,
     PromptEditorComponent,
@@ -50,7 +51,7 @@ export class CopilotComponent {
 
   public processing: boolean = false;
 
-  // public document: Document | undefined;
+  public model: 'claude-3-haiku-20240307' | 'claude-3-sonnet-20240229' | 'claude-3-opus-20240229' = 'claude-3-haiku-20240307';
   public messages: Message[] = [];
 
   public firstTokenArrived: boolean = false;
@@ -109,7 +110,7 @@ export class CopilotComponent {
 
     this.cdr.detectChanges();
 
-    this.messageService.stream(this.messages, document).subscribe({
+    this.messageService.stream(this.messages, document, this.model).subscribe({
       next: (response: SSEMessage) => {
         console.log(response);
         this.firstTokenArrived = true;

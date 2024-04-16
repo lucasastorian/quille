@@ -2,6 +2,7 @@ import os
 import certifi
 import logging
 import datetime
+import asyncio
 import aiohttp_cors
 from aiohttp import web
 from dotenv import load_dotenv
@@ -43,14 +44,17 @@ async def stream(request):
     """Prompts the earnings call analyst"""
     body = await request.json()
 
-    chain = Assistant(messages=body['messages'], document=body['document'])
+    chain = Assistant(messages=body['messages'], document=body['document'], model=body['model'])
 
     logging.info(f"{datetime.datetime.utcnow().isoformat()}: Prompting Assistant")
 
     async with sse_response(request) as sse_queue:
+        sse_queue.headers['Transfer-Encoding'] = 'chunked'
+        sse_queue.headers.pop('Content-Length', None)
+
         await chain.call(sse_queue=sse_queue)
         print(f"{datetime.datetime.utcnow().isoformat()} - Completion of Assistant Stream")
-        await sse_queue.send("0\n\n")
+        await asyncio.sleep(1)
 
 
 if __name__ == '__main__':

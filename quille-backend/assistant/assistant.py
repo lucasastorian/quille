@@ -11,12 +11,11 @@ from assistant.router.prompts.new_document import NewDocumentPrompt
 
 class Assistant:
 
-    model: str = "claude-3-haiku-20240307"
-
-    def __init__(self, messages: List[Message], document: Document):
+    def __init__(self, messages: List[Message], document: Document, model: str = "claude-3-haiku-20240307"):
         self.messages = messages
         self.document = document
         self.document_id = document['id']
+        self.model = model
 
     async def call(self, sse_queue: _ContextManager):
         """Streams a completion back to the client"""

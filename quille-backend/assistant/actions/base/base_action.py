@@ -53,6 +53,9 @@ class BaseAction(ABC):
                 completion += chunk
                 await parser.stream(completion=completion)
 
+        if self.stop_sequences:
+            completion += self.stop_sequences[0]
+
         message = await parser.complete(completion=completion)
 
         return message

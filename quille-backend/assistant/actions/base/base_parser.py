@@ -28,7 +28,7 @@ class BaseParser(ABC):
     @staticmethod
     def _message_content(completion: str) -> Optional[str]:
         """Uses regex to extract the message content"""
-        match = re.search(r"<message>(.*?)</message>|<message>(.*)", completion, re.DOTALL)
+        match = re.search(r"<message>(.*?)<|<message>(.*)", completion, re.DOTALL)
         return match.group(1) or match.group(2) if match else None
 
     def _get_message(self, content: str, status: Literal['InProgress', 'Completed'] = 'InProgress') -> Message:

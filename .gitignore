@@ -1,0 +1,50 @@
+# Frontend
+quille-frontend/dist
+quille-frontend/tmp
+quille-frontend/out-tsc
+quille-frontend/bazel-out
+quille-frontend/node_modules
+quille-frontend/npm-debug.log
+quille-frontend/yarn-error.log
+quille-frontend/.idea/
+quille-frontend/.project
+quille-frontend/.classpath
+quille-frontend/.c9/
+quille-frontend/*.launch
+quille-frontend/.settings/
+quille-frontend/*.sublime-workspace
+quille-frontend/.vscode/*
+!quille-frontend/.vscode/settings.json
+!quille-frontend/.vscode/tasks.json
+!quille-frontend/.vscode/launch.json
+!quille-frontend/.vscode/extensions.json
+quille-frontend/.history/*
+quille-frontend/.angular/cache
+quille-frontend/.sass-cache/
+quille-frontend/connect.lock
+quille-frontend/coverage
+quille-frontend/libpeerconnection.log
+quille-frontend/testem.log
+quille-frontend/typings
+
+# Backend
+quille-backend/__pycache__/
+quille-backend/*.pyc
+quille-backend/*.pyo
+quille-backend/*.pyd
+quille-backend/.Python
+quille-backend/env/
+quille-backend/venv/
+quille-backend/.env
+quille-backend/.env/
+quille-backend/.venv/
+quille-backend/pip-log.txt
+quille-backend/pip-delete-this-directory.txt
+
+# IDEs and editors
+.idea/
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db

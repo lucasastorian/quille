@@ -1,0 +1,17 @@
+<div *ngIf="message && message.web_search_query" class="mt-2">
+    <div class="flex flex-col w-full leading-1.5 p-4 rounded-xl border-blue-600 bg-blue-100">
+        <p class="text-base font-normal text-gray-900 dark:text-white">{{ message.content }}</p>
+        <ol class="mt-4 space-y-4list-inside">
+            <li *ngFor="let query of message.web_search_query.queries"
+                class="flex justify-start items-center space-x-2 text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                    <path fill-rule="evenodd"
+                        d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                        clip-rule="evenodd" />
+                </svg>
+
+                <span>{{ query.query }}</span>
+            </li>
+        </ol>
+    </div>
+</div>

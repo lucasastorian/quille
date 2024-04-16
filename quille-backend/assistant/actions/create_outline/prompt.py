@@ -36,8 +36,6 @@ You've been tasked with creating an outline for a piece of content based on the 
 
 Start your response with a <message> to the user, explaining that you will create an outline for them. Then, provide the outline in the format shown above.
 
-You can only define <sections></sections> and <subsections></subsections>. There are no <subsubsections> or <subsubsubsections> allowed.
-
 Here's an example:
 
 <example1>
@@ -118,4 +116,7 @@ Your response:
 
 </example2>
 
+You can only define <sections></sections> and <subsections></subsections>. <subsubsections> or <subsubsubsections> are NOT allowed.
+
+Remember to close the message with the </message> tag, each section with a </section> tag and each subsection with a </subsection> tag.
 """

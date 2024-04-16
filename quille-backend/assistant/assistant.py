@@ -6,7 +6,9 @@ from aiohttp_sse.helpers import _ContextManager
 
 from schema import Message, Document
 from assistant.router.router import Router
-from assistant.router.prompts.new_document import NewDocumentPrompt
+from assistant.router import NewDocumentPrompt, RewriteDocumentPrompt
+from assistant.actions import (InquireAction, CreateOutlineAction, WebSearchAction, CreateDocumentAction,
+                               RewriteDocumentAction)
 
 
 class Assistant:
@@ -28,8 +30,7 @@ class Assistant:
                 if self.complete():
                     break
 
-            print("Sending complete")
-            # await self._on_complete(sse_queue=sse_queue)
+            await self._on_complete(sse_queue=sse_queue)
 
         except Exception as e:
             logging.error(traceback.format_exc())
@@ -37,9 +38,15 @@ class Assistant:
 
     async def step(self, sse_queue: _ContextManager):
         """Completes a single step of the assistant"""
+        if self.document.get("content"):
+            router_prompt = NewDocumentPrompt().format()
+            actions = [InquireAction, WebSearchAction, CreateOutlineAction, CreateDocumentAction]
+        else:
+            router_prompt = RewriteDocumentPrompt(document=self.document).format()
+            actions = [InquireAction, WebSearchAction, CreateOutlineAction, RewriteDocumentAction]
+
         router = Router(document=self.document, messages=self.messages, sse_queue=sse_queue, model=self.model)
-        system_prompt = NewDocumentPrompt().format()
-        await router.route(system_prompt=system_prompt)
+        await router.route(actions=actions, system_prompt=router_prompt)
 
     def complete(self) -> bool:
         """Returns True if the assistant has completed"""

@@ -114,6 +114,7 @@ export class MessageService {
       if (event.type === 'error') {
         const errorEvent = event as ErrorEvent;
         console.error(errorEvent.error, errorEvent.message);
+        stream$.complete();
 
       } else {
         const messageEvent = event as MessageEvent;

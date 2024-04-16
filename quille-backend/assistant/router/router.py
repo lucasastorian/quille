@@ -7,7 +7,6 @@ from aiohttp_sse.helpers import _ContextManager
 from schema import Message, Document
 from assistant.actions.base.base_action import BaseAction
 from assistant.utils.prompt_formatter import PromptFormatter
-from assistant.actions import CreateDocumentAction, CreateOutlineAction, InquireAction, WebSearchAction
 
 
 class Router:
@@ -22,9 +21,9 @@ class Router:
         self.client = anthropic.AsyncAnthropic()
         self.prompt_formatter = PromptFormatter(messages=messages)
 
-    async def route(self, system_prompt: str):
+    async def route(self, actions: List[BaseAction], system_prompt: str):
         """Routes the message to an action and executes that action"""
-        actions = self.available_actions()
+        actions = self._instantiate_actions(actions=actions)
         action_name = await self._choose_action(system_prompt=system_prompt, actions=actions)
         action = next((action for action in actions if action.name == action_name), None)
 
@@ -33,7 +32,7 @@ class Router:
         else:
             raise ValueError(f"No action found with name '{action_name}'")
 
-    def available_actions(self) -> List[BaseAction]:
+    def _instantiate_actions(self, actions: List[BaseAction]) -> List[BaseAction]:
         """Returns a list of available actions"""
         response_id = str(uuid.uuid4())
         parameters = {
@@ -44,8 +43,6 @@ class Router:
             "model": self.model,
             "temperature": self.temperature
         }
-
-        actions = [CreateDocumentAction, CreateOutlineAction, InquireAction, WebSearchAction]
 
         create_action = partial(lambda action: action(**parameters))
         return [create_action(action) for action in actions]

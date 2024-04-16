@@ -11,6 +11,4 @@
 
 <h2 class="text-3xl">🛠️ Installation </h2><p></p><p></p><p></p> <ul> <li><p>🐍 Make sure you have Python 3.10 & Angular 17 installed</p></li> <li><p>📝 Add a .env file to the quille-backend based on the example.env file </p></li> <li><p>💻 Pip install the requirements.txt in virtual env & run aiohttp server </p></li> <li><p>🌐 npm install the frontend repo & serve it up on port 4200 </p></li> <li><p>🎉 Voila ! </p></li> </ul>
 
-<h2 class="text-3xl">🚀 Get Started</h2><p></p><p>To start using Quille, simply visit our website at [quille.app](https://quille.app) and create an account. You can choose from various pricing plans based on your needs, or start with our free trial to experience the power of AI-assisted content writing firsthand!</p><p></p>
-
 <h2 class="text-3xl">🤝 Contributing</h2><p></p><p>We welcome contributions from the community! If you'd like to contribute to Quille, please check out our [contributing guidelines](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md) to get started.</p><p></p><h2 class="text-3xl">📧 Contact Us</h2><p></p><p>If you have any questions, feedback, or suggestions, feel free to reach out to us at [lucasastorian@gmail.com](mailto:lucasastorian@gmail.com). We'd love to hear from you!</p><p></p><p>Happy writing with Quille! ✨</p>
